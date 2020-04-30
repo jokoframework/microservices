@@ -1,0 +1,11 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+app:
+  id: ${random.uuid}
+
+spring:
+  zipkin:
+    baseUrl: http://localhost:9411
