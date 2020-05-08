@@ -5,9 +5,10 @@ está basado en spring cloud.
 # Configuración de arranque 
 Para poner en marcha la arquitectura en microservicios, se recomienda iniciar los proyectos en el siguiente orden:
 - eureka-server
-- server-config
-- microservicios 
-- gateway
+- config-server
+- microservice1
+- microservice2
+- cloud-gateway
 
 Pasos para arrancar los proyecto, como son proyectos spring-boot, se pueden hacerlo con el comando `mvn spring-boot:run`
 
@@ -21,3 +22,10 @@ Para hacerlo desde un docker:
 ```
 docker run -d -p 9411:9411 openzipkin/zipkin
 ```
+
+# Probar funcionamiento del `cloud-gateway`
+
+- Invoca al microservice1: http://localhost:5555/api/micro1/v1/cities/1 
+- Invoca al microservice2: http://localhost:5555/api/micro2/v1/countries/2
+
+
