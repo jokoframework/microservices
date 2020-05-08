@@ -25,10 +25,10 @@ public class Microservice1Controller {
 
     @GetMapping("/{id}")
     public CityDTO getCityById(@PathVariable("id")
-                    Long cliendId) {
+                    Long id) {
         LOG.info("Access to service example 1 with app id {}", instanceId);
         return CityDTO.builder()
-                .id(cliendId)
+                .id(id)
                 .description("Asuncion")
                 .appId(instanceId)
                 .build();
@@ -54,7 +54,6 @@ public class Microservice1Controller {
                 .builder()
                 .cities(cities)
                 .build();
-
     }
 
 

@@ -10,6 +10,9 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
 zuul:
   prefix: /api
+  host:
+    connect-timeout-millis: 10000
+    socket-timeout-millis: 10000
   routes:
     microservice-1:
       path: /micro1/**
