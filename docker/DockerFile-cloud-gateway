@@ -1,0 +1,8 @@
+#
+# Package stage
+#
+FROM openjdk:11
+ARG JAR_FILE
+COPY ${JAR_FILE} cloud-gateway.jar
+EXPOSE 5555
+ENTRYPOINT ["java","-jar","cloud-gateway.jar"]

@@ -1,0 +1,8 @@
+#
+# Package stage
+#
+FROM openjdk:11
+ARG JAR_FILE
+COPY ${JAR_FILE} eureka-server.jar
+EXPOSE 8761
+ENTRYPOINT ["java","-jar","eureka-server.jar"]

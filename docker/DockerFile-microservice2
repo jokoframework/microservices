@@ -1,0 +1,7 @@
+#
+# Package stage
+#
+FROM openjdk:11
+ARG JAR_FILE
+COPY ${JAR_FILE} microservice2.jar
+ENTRYPOINT ["java","-jar","microservice2.jar"]

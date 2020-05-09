@@ -1,0 +1,9 @@
+#
+# Package stage
+#
+FROM openjdk:11
+ARG JAR_FILE
+ARG PORT_EXPOSE
+COPY ${JAR_FILE} config-server.jar
+EXPOSE 8888
+ENTRYPOINT ["java","-jar","config-server.jar"]
