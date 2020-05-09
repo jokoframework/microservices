@@ -2,6 +2,10 @@
 Joko microservices provee un conjunto de proyectos base para una arquitectura en microservicios, 
 está basado en spring cloud.
 
+# Requisitos
+- Java jdk 8 o superior
+- Maven 
+
 # Configuración de arranque 
 Para poner en marcha la arquitectura en microservicios, se recomienda iniciar los proyectos en el siguiente orden:
 - eureka-server
