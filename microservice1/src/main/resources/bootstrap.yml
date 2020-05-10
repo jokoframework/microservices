@@ -5,7 +5,7 @@ spring:
     active: default
   cloud:
     config:
-      uri: http://localhost:8888
+      uri: ${CONFIG_SERVER:http://localhost:8888}
       enabled: true
 server:
-  port: 0
+  port: 8080
