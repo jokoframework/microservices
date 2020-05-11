@@ -34,6 +34,8 @@ services:
       dockerfile: DockerFile-microservice1
       args:
         JAR_FILE: microservice1-0.0.1-SNAPSHOT.jar
+    ports:
+      - '0:8080'
     links:
       - config-server:config-server
       - eureka-server:eureka-server
@@ -43,7 +45,7 @@ services:
     networks:
       - micro
     environment:
-      server.port: 5555
+      server.port: 8080
       eureka.instance.preferIpAddress: 'true'
       client.registerWithEureka: 'true'
       eureka.client.serviceUrl.defaultZone: 'http://eureka-server:8761/eureka/'
@@ -56,6 +58,8 @@ services:
       dockerfile: DockerFile-microservice2
       args:
         JAR_FILE: microservice2-0.0.1-SNAPSHOT.jar
+    ports:
+      - '0:8080'
     links:
       - config-server:config-server
       - eureka-server:eureka-server
@@ -65,7 +69,7 @@ services:
     networks:
       - micro
     environment:
-      server.port: 5555
+      server.port: 8080
       eureka.instance.preferIpAddress: 'true'
       client.registerWithEureka: 'true'
       eureka.client.serviceUrl.defaultZone: 'http://eureka-server:8761/eureka/'
