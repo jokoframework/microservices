@@ -2,7 +2,7 @@ version: '3.3'
 services:
   eureka-server:
     container_name: eureka-server
-    image: 'joko/eureka-server
+    image: 'joko/eureka-server'
     build:
       context: .
       dockerfile: DockerFile-eureka-server
@@ -51,11 +51,8 @@ services:
       - micro
     environment:
       server.port: 8080
-      eureka.instance.preferIpAddress: 'true'
-      client.registerWithEureka: 'true'
       eureka.client.serviceUrl.defaultZone: 'http://eureka-server:8761/eureka/'
       spring.config.uri: 'http://config-server:8888'
-      spring.config.enabled: 'true'
 
   microservice2:
     container_name: microservice2
@@ -77,11 +74,8 @@ services:
       - micro
     environment:
       server.port: 8080
-      eureka.instance.preferIpAddress: 'true'
-      client.registerWithEureka: 'true'
       eureka.client.serviceUrl.defaultZone: 'http://eureka-server:8761/eureka/'
       spring.config.uri: 'http://config-server:8888'
-      spring.config.enabled: 'true'
 
   cloud-gateway:
     container_name: cloud-gateway
