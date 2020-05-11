@@ -1,5 +1,7 @@
 package io.github.jokoframework.microservice2.controller;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import io.github.jokoframework.microservice2.dto.CityDTO;
 import io.github.jokoframework.microservice2.dto.CountryDTO;
 import io.github.jokoframework.microservice2.dto.ListResponseDTO;
 import org.slf4j.Logger;
@@ -10,6 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
@@ -23,7 +28,7 @@ public class Microservice2Controller {
     @Value("${app.id}")
     private String instanceId;
 
-    private Microservice2Controller(RestTemplate restTemplate){
+    public Microservice2Controller(RestTemplate restTemplate){
         this.restTemplate = restTemplate;
     }
 
@@ -39,11 +44,20 @@ public class Microservice2Controller {
     }
 
     @GetMapping("/{id}/cities")
+    @HystrixCommand(fallbackMethod = "getCitiesDefaultById")
     public ListResponseDTO getCitiesByCountryId(@PathVariable("id")
                                                       Long id) {
         LOG.info("Access to microservices 2 with app id {}", instanceId);
         ListResponseDTO cities = restTemplate.getForObject("http://microservice1/v1/cities/country/"+id, ListResponseDTO.class);
         return cities;
+    }
+
+    private ListResponseDTO getCitiesDefaultById(Long id){
+        ListResponseDTO citiesDefault = new ListResponseDTO();
+        List<CityDTO> cities = new ArrayList<>();
+        cities.add(new CityDTO(1L, "Default", instanceId));
+        citiesDefault.setCities(cities);
+        return citiesDefault;
     }
 
 }
