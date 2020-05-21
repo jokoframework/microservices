@@ -28,8 +28,20 @@ docker run -d -p 9411:9411 openzipkin/zipkin
 ```
 
 # Probar funcionamiento del `cloud-gateway`
-
-- Invoca al microservice1: http://localhost:5555/api/micro1/v1/cities/1 
-- Invoca al microservice2: http://localhost:5555/api/micro2/v1/countries/2
+- Autenticar al usuario para obtener access token + refresh token : http://localhost:5555/oauth/token 
+  ```
+  Headers: 
+  Authorization:Basic YXBwY2xpZW50OmFwcGNsaWVudEAxMjM=
+  Content-Type :application/x-www-form-urlencoded
+  ```
+  ```
+  Form:
+  grant_type = password
+  username = john
+  password = john@123
+  ```
+  
+- Invoca al microservice1: http://localhost:5555/api/micro1/v1/cities/1 con Header Authorization:Bearer -accessToken-
+- Invoca al microservice2: http://localhost:5555/api/micro2/v1/countries/2 con Header Authorization:Bearer -accessToken-
 
 
