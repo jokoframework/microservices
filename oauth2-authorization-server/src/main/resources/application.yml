@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: oauth2server
+  profiles:
+    active: default
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER:http://localhost:8888}
+      enabled: true
+server:
+  port: 8085
