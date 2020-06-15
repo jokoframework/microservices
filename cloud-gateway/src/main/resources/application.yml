@@ -15,7 +15,7 @@ zuul:
   sensitiveHeaders: Cookie,Set-Cookie
   routes:
     oauth2-server:
-      path: /oauth/**
+      path: /**
       serviceId: oauth2server
     microservice-1:
       path: /api/micro1/**
