@@ -8,6 +8,7 @@ Para poner en marcha la arquitectura en microservicios, se recomienda iniciar lo
 - config-server
 - microservice1
 - microservice2
+- oauth2-authorization-server
 - cloud-gateway
 
 Pasos para arrancar los proyecto, como son proyectos spring-boot, se pueden hacerlo con el comando `mvn spring-boot:run`
