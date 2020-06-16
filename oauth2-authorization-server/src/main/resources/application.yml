@@ -1,6 +1,6 @@
 spring:
   application:
-    name: microservice1
+    name: oauth2server
   profiles:
     active: default
   cloud:
@@ -8,4 +8,4 @@ spring:
       uri: ${CONFIG_SERVER:http://localhost:8888}
       enabled: true
 server:
-  port: 8080
+  port: 8085
