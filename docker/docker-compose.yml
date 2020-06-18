@@ -1,0 +1,103 @@
+version: '3.3'
+services:
+  eureka-server:
+    container_name: eureka-server
+    image: 'joko/eureka-server'
+    build:
+      context: .
+      dockerfile: DockerFile-eureka-server
+      args:
+        JAR_FILE: eureka-server-0.0.1-SNAPSHOT.jar
+    ports:
+      - '8761:8761'
+    environment:
+      DEUREKA_SERVER: 'http://eureka-server:8761/eureka'
+    networks:
+      - micro
+
+  config-server:
+    image: 'joko/config-server'
+    container_name: config-server
+    build:
+      context: .
+      dockerfile: DockerFile-config-server
+      args:
+        JAR_FILE: config-server-0.0.1-SNAPSHOT.jar
+    ports:
+      - '8888:8888'
+    networks:
+      - micro
+    environment:
+      spring.cloud.config.server.git.uri: 'https://github.com/marcosechague/spring-cloud-demo-properties'
+
+
+  microservice1:
+    container_name: microservice1
+    image: 'joko/microservice1'
+    build:
+      context: .
+      dockerfile: DockerFile-microservice1
+      args:
+        JAR_FILE: microservice1-0.0.1-SNAPSHOT.jar
+    ports:
+      - '0:8080'
+    links:
+      - config-server:config-server
+      - eureka-server:eureka-server
+    depends_on:
+      - config-server
+      - eureka-server
+    networks:
+      - micro
+    environment:
+      server.port: 8080
+      eureka.client.serviceUrl.defaultZone: 'http://eureka-server:8761/eureka/'
+      spring.config.uri: 'http://config-server:8888'
+
+  microservice2:
+    container_name: microservice2
+    image: 'joko/microservice2'
+    build:
+      context: .
+      dockerfile: DockerFile-microservice2
+      args:
+        JAR_FILE: microservice2-0.0.1-SNAPSHOT.jar
+    ports:
+      - '0:8080'
+    links:
+      - config-server:config-server
+      - eureka-server:eureka-server
+    depends_on:
+      - config-server
+      - eureka-server
+    networks:
+      - micro
+    environment:
+      server.port: 8080
+      eureka.client.serviceUrl.defaultZone: 'http://eureka-server:8761/eureka/'
+      spring.config.uri: 'http://config-server:8888'
+
+  cloud-gateway:
+    container_name: cloud-gateway
+    build:
+      context: .
+      dockerfile: DockerFile-cloud-gateway
+      args:
+        JAR_FILE: cloud-gateway-0.0.1-SNAPSHOT.jar
+    ports:
+      - '5555:5555'
+    links:
+      - config-server:config-server
+      - eureka-server:eureka-server
+    depends_on:
+      - config-server
+      - eureka-server
+    networks:
+      - micro
+    environment:
+      eureka.client.serviceUrl.defaultZone: 'http://eureka-server:8761/eureka/'
+    image: 'joko/cloud-gateway'
+
+networks:
+  micro:
+    driver: bridge
